@@ -1,0 +1,35 @@
+name: Uptime Monitor
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"   # Every 5 minutes, 24/7
+  workflow_dispatch:          # Also allows manual trigger from GitHub UI
+
+jobs:
+  monitor:
+    name: Check Sites & API
+    runs-on: ubuntu-latest
+    timeout-minutes: 4        # Kill if stuck (stays under 5 min window)
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run uptime monitor
+        env:
+          SMTP_HOST:    ${{ secrets.SMTP_HOST }}
+          SMTP_PORT:    ${{ secrets.SMTP_PORT }}
+          SMTP_SECURE:  ${{ secrets.SMTP_SECURE }}
+          SMTP_USER:    ${{ secrets.SMTP_USER }}
+          SMTP_PASS:    ${{ secrets.SMTP_PASS }}
+          ALERT_EMAILS: ${{ secrets.ALERT_EMAILS }}
+        run: node monitor.js
