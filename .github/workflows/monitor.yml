@@ -10,6 +10,8 @@ jobs:
     name: Check Sites & API
     runs-on: ubuntu-latest
     timeout-minutes: 4
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout repo
