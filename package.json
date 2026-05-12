@@ -1,0 +1,12 @@
+{
+  "name": "uptime-monitor",
+  "version": "1.0.0",
+  "description": "Uptime monitor for stucred.com, kreon.in, mdpd.in + college API",
+  "main": "monitor.js",
+  "scripts": {
+    "start": "node monitor.js"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.13"
+  }
+}
