@@ -2,17 +2,17 @@ name: Uptime Monitor
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
-  workflow_dispatch:
+    - cron: "*/15 * * * *"   # Every 15 minutes 24/7
+  workflow_dispatch:           # Manual trigger from GitHub UI
   push:
     branches:
-      - main
+      - main                  # Also runs on every commit (keeps workflow active)
 
 jobs:
   monitor:
     name: Check Sites & API
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 4        # Kill if stuck — safely under 15 min window
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
